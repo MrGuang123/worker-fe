@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [serverlessResult, setServerlessResult] = useState('')
+
+  useEffect(() => {
+    fetch('https://my-worker.ytg.workers.dev/')
+      .then(res => res.json())
+      .then(res => {
+        setServerlessResult(res?.hello)
+        console.log('serverless Result', res)
+      })
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +29,7 @@ function App() {
         >
           Learn React
         </a>
+        <p style={{ color: 'red', fontSize: '30px' }}>serverlessResult: {serverlessResult}</p>
       </header>
     </div>
   );
